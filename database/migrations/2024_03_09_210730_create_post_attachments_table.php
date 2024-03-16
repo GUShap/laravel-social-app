@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,7 +12,13 @@ return new class extends Migration
     {
         Schema::create('post_attachments', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId(column: 'post_id')->constrained(table: 'posts');
+            $table->string(column: 'name', length: 255);
+            $table->string(column: 'path', length: 255);
+            $table->string(column: 'mime', length: 25);
+            $table->integer(column: 'size');
+            $table->foreignId(column: 'created_by')->constrained(table: 'users');
+            $table->timestamp(column: 'created_at')->nullable();
         });
     }
 
